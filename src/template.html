@@ -5,16 +5,49 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <button class="home">Home</button>
-            <button class="menu">Menu</button>
-            <button class="about">About</button>
-        </nav>
-    </header>
-    <div id="content">
-       
+    <div class="side-container">
+        <div class="project-container">
+            <button class="project">All Tasks</button>
+            <button class="project">Today</button>
+            <button class="project">Completed</button>
+        </div>
+        <button class="new-project">New Project</button>
+        <form action="" class="projectForm hide">
+            <label for="name">Name:</label>
+            <input type="text"  id="name" required>
+            <button type="submit">Add Project</button>
+        </form>
     </div>
-    
+    <div class="main-container">
+        <button class="add-task">New Task</button>
+        <form action="" class="taskForm hide">
+            <label for="title">Title:</label>
+            <input type="text"  id="title" required>
+            <label for="description">Description:</label>
+            <textarea name="" id="description"></textarea>
+            <label for="dueDate">Due Date:</label>
+            <input type="date"  id="dueDate" required>
+            <div class="priority">
+                <h3>Priority:</h3>
+                <input type="radio" id="Low" name="priority" value="Low" checked/>
+                <label for="Low">Low</label>
+          
+                <input type="radio" id="Medium" name="priority" value="Medium" />
+                <label for="Medium">Medium</label>
+          
+                <input type="radio" id="High" name="priority" value="High" />
+                <label for="High">High</label>
+              </div>
+            <label for="project">Project:</label>
+            <select name="project" id="project" >
+                <option value="" disabled selected>--Select a project--</option>
+                <option value="All Task" id="1">All Tasks</option>
+            </select>
+            <button type="submit" class="submit-task">Add Task</button>
+        </form>
+        <div class="tasks-container">
+
+        </div>
+    </div>
 </body>
 </html>
