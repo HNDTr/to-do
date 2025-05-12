@@ -5,6 +5,7 @@ export class Task {
     #dueDate;
     #priority;
     #project;
+    #id;
     #complete = false;
 
     constructor(title, description, dueDate, priority, project){
@@ -13,6 +14,7 @@ export class Task {
         this.#dueDate = dueDate;
         this.#priority = priority;
         this.#project = project;
+        this.#id = crypto.randomUUID();
     }
 
     get complete(){
@@ -41,6 +43,10 @@ export class Task {
     
     get project(){
         return this.#project;
+    }
+
+    get id(){
+        return this.#id;
     }
 
     edit(title, description, dueDate, priority, project){

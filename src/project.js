@@ -18,6 +18,10 @@ export class Project {
         return [...this.#tasks];
     }
 
+    updateTasks(index){
+        this.#tasks.splice(index, 1);
+    }
+
     addTask(task){
         this.#tasks.push(task);
     }
