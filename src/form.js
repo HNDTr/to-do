@@ -1,36 +1,43 @@
-// import { createTask, createProject} from "./create"
+export function getTaskFormData(){
+    return {
+        title: document.querySelector('#title').value,
+        description: document.querySelector('#description').value,
+        dueDate: document.querySelector('#dueDate').value,
+        priority: document.querySelector('input[name="priority"]:checked').value,
+        project: document.querySelector('#project').value,
+    }
+}
 
+export function setTaskFormData(task){
+    let taskTitle = document.querySelector('#title');
+    taskTitle.value = task.title;
+    let taskDesc = document.querySelector('#description');
+    taskDesc.value = task.description;
+    let dueDate = document.querySelector('#dueDate');
+    dueDate.value = task.dueDate;
 
-// let storage = {
-//     projects: [],
-//     tasks: []
-// }
+    
+    let taskPriority = document.querySelectorAll('input[name="priority"]');
+    const matchPriority = Array.from(taskPriority).find(
+        p => p.value === task.priority
+    );
+    
+    if (matchPriority) {
+        matchPriority.checked = true;
+    }
+    let taskProject =  document.querySelector('#project');
+    const projectOptions = taskProject.options;
+    const matchProject =  Array.from(projectOptions).find(
+        p => p.textContent === task.project
+    );
 
-// // New Task Button
-// const addTaskButton = document.querySelector('.submit-task');
-// addTaskButton.addEventListener('click', (e) => {
-//     e.preventDefault();
+    if (matchProject){
+        matchProject.selected = true;
+    }
+}
 
-//     // Getting form values
-//     const taskTitle = document.querySelector('#title').value;
-
-//     const taskDesc = document.querySelector('#description').value;
-
-//     const taskDate = document.querySelector('#dueDate').value;
-
-//     const priority = document.querySelector('input[name="priority"]:checked').value;
-
-//     const project = document.querySelector('#project').value;
-//     const newTask = createTask(taskTitle, taskDesc, taskDate, priority, project);
-
-//     // console.log(project)
-//     // console.log("New Task:", newTask);
-
-//     storage.tasks.push(newTask);
-
-//     document.querySelector('.taskForm').reset();
-
-// });
-
-
-// export {storage}
+export function getProjectFormData(){
+    return {
+        name: document.querySelector('#projectName').value,
+    }
+}
