@@ -51,14 +51,18 @@ function createTaskCard(task){
         editSubmitButton.classList.remove('hide')
         editSubmitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            handleEditTask(task, getTaskFormData())
+            const editData = getTaskFormData();
+            handleEditTask(task, editData);
             taskForm.classList.add('hide'); 
-            taskForm.reset();
+            // taskForm.reset();
             submitButton.classList.remove('hide');
             editSubmitButton.classList.add('hide')
+            taskForm.reset();
+            setCurrentPage(editData.project)
              // Put in how you want page to render (TODO)
+            console.log(currentPage);
             displayPage(currentPage);
-        })
+        }, { once: true });
     })
 
     card.appendChild(completeBtn);

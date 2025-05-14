@@ -12,6 +12,7 @@ let currentPage = 'All Tasks'
 const addTaskButton = document.querySelector('.add-task');
 addTaskButton.addEventListener('click', () => {
     taskForm.classList.remove('hide');
+    taskForm.reset();
 })
 // task form
 const taskForm = document.querySelector('.taskForm');
@@ -57,7 +58,6 @@ submitTask.addEventListener('click', (e) => {
         View.setCurrentPage('All tasks');
         console.log(View.currentPage);
     }
-    document.querySelector('.taskForm').reset();
     taskForm.classList.add('hide'); 
 });
 
