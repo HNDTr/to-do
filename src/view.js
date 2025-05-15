@@ -11,8 +11,8 @@ function renderTaskList(tasks) {
 }
 
 function createTaskCard(task){
-    // task form
-    const taskForm = document.querySelector('.taskForm');
+    // form container
+    const taskFormContainer = document.querySelector('.task-form-container');
     
     const card = document.createElement('div');
     card.className = 'task-card';
@@ -46,7 +46,8 @@ function createTaskCard(task){
     editBtn.textContent = 'Edit';
     editBtn.addEventListener('click', () => {
         setTaskFormData(task);
-        taskForm.classList.remove('hide'); 
+        taskFormContainer.classList.remove('hide'); 
+        // taskForm.classList.remove('hide'); 
         const submitButton = document.querySelector('.submit-task');
         submitButton.classList.add('hide');
         const editSubmitButton = document.querySelector('.edit-task');
@@ -55,13 +56,11 @@ function createTaskCard(task){
             e.preventDefault();
             const editData = getTaskFormData();
             handleEditTask(task, editData);
-            taskForm.classList.add('hide'); 
+            taskFormContainer.classList.add('hide'); 
             submitButton.classList.remove('hide');
             editSubmitButton.classList.add('hide')
-            // taskForm.reset();
             setCurrentPage(editData.project)
              // Put in how you want page to render (TODO)
-            console.log(currentPage);
             displayPage(currentPage);
         }, {once: true});
     })
