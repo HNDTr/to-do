@@ -18,11 +18,22 @@ export class Project {
         return [...this.#tasks];
     }
 
+    setTasks(tasksArray) {
+        this.#tasks = tasksArray;
+    }
+
     updateTasks(index){
         this.#tasks.splice(index, 1);
     }
 
     addTask(task){
         this.#tasks.push(task);
+    }
+
+    toJSON() {
+        return {
+            name: this.#name,
+            tasks: this.#tasks
+        };
     }
 }

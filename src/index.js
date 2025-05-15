@@ -6,7 +6,13 @@ import * as View from "./view";
 import { format } from "date-fns";
 import "./style.css";
 
-let currentPage = 'All Tasks'
+
+document.addEventListener("DOMContentLoaded", () => {
+    Storage.loadProjects();
+    Storage.loadTasks();
+    View.renderTaskList(Storage.tasks);
+    View.renderProjectCard(Storage.projects);
+})
 
 // show form 
 const addTaskButton = document.querySelector('.add-task');
@@ -35,8 +41,8 @@ addProject.addEventListener('click', (e) => {
     const dupName = Storage.projects.find(p => p.name === projectData.name);
     // if no dup
     if(!dupName){
-        const project = handleNewProject(projectData);
-        View.createProjectCard(project);
+        handleNewProject(projectData);
+        View.renderProjectCard(Storage.projects);
     }
     projectForm.reset();
     projectForm.classList.add('hide');
@@ -52,11 +58,11 @@ submitTask.addEventListener('click', (e) => {
         const project = Storage.projects.find(p => p.name === taskData.project);
         View.renderTaskList(project.tasks);
         View.setCurrentPage(taskData.project);
-        console.log(View.currentPage);
+        // console.log(View.currentPage);
     } else{
         View.renderTaskList(Storage.tasks);
         View.setCurrentPage('All tasks');
-        console.log(View.currentPage);
+        // console.log(View.currentPage);
     }
     taskForm.classList.add('hide'); 
 });

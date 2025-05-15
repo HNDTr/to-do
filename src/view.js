@@ -26,6 +26,8 @@ function createTaskCard(task){
     completeBtn.textContent = task.complete ? 'Undo' : 'Complete';
     completeBtn.addEventListener('click', () => {
         task.toggleComplete();
+        Storage.saveTasks();
+        Storage.saveProjects();
         // Put in how you want page to render (TODO)
         displayPage(currentPage);
     })
@@ -54,15 +56,14 @@ function createTaskCard(task){
             const editData = getTaskFormData();
             handleEditTask(task, editData);
             taskForm.classList.add('hide'); 
-            // taskForm.reset();
             submitButton.classList.remove('hide');
             editSubmitButton.classList.add('hide')
-            taskForm.reset();
+            // taskForm.reset();
             setCurrentPage(editData.project)
              // Put in how you want page to render (TODO)
             console.log(currentPage);
             displayPage(currentPage);
-        }, { once: true });
+        }, {once: true});
     })
 
     card.appendChild(completeBtn);
@@ -71,9 +72,14 @@ function createTaskCard(task){
     return card;
 }
 
+function renderProjectCard(projects){
+    const projectContainer = document.querySelector('.project-container');
+    projectContainer.innerHTML = '';
+    projects.forEach(project => projectContainer.appendChild(createProjectCard(project)));
+}
+
 // TODO Project render
 function createProjectCard(project){
-    const projectContainer = document.querySelector('.project-container');
     const projectList = document.querySelector('#project');
 
     const container = document.createElement('div');
@@ -112,7 +118,9 @@ function createProjectCard(project){
     container.appendChild(projectButton);
     container.appendChild(projectRemoveButton);
 
-    projectContainer.appendChild(container)
+    return container
+
+
 }
 
 
@@ -155,6 +163,5 @@ completeTasksButton.addEventListener('click', () => {
     displayPage(currentPage);
 });
 
-// window.curPage = currentPage;
 
-export {renderTaskList, createProjectCard, displayPage, setCurrentPage, currentPage}
+export {renderTaskList, createProjectCard, displayPage, setCurrentPage, renderProjectCard}

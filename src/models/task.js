@@ -49,11 +49,27 @@ export class Task {
         return this.#id;
     }
 
+    get complete(){
+        return this.#complete;
+    }
+
     edit(title, description, dueDate, priority, project){
         if (title !== undefined){ this.#title = title}
         if (description !== undefined){ this.#description = description}
         if (dueDate !== undefined){ this.#dueDate = dueDate}
         if (priority !== undefined){ this.#priority = priority}
         if (project !== undefined){ this.#project = project}
+    }
+
+    toJSON() {
+        return {
+            title: this.#title,
+            description: this.#description,
+            dueDate: this.#dueDate,
+            priority: this.#priority,
+            project: this.#project,
+            id: this.#id,
+            complete: this.#complete
+        };
     }
 }
