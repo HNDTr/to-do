@@ -13,8 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     View.renderTaskList(Storage.tasks);
     View.renderProjectCard(Storage.projects);
 
-    const closeFormBtn = document.querySelector('.close-btn');
-
     (function addProject(){
         const projectFormContainer = document.querySelector('.project-form-container');
         const projectForm = document.querySelector('.projectForm');
@@ -61,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // show form 
         const addTaskButton = document.querySelector('.add-task');
         addTaskButton.addEventListener('click', () => {
+            View.renderProjectCard(Storage.projects);
             taskFormContainer.classList.remove('hide');
             taskForm.reset();
         })
@@ -91,6 +90,3 @@ document.addEventListener("DOMContentLoaded", () => {
     
     })();
 })
-
-
-window.storage = Storage

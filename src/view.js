@@ -136,6 +136,7 @@ function renderProjectCard(projects){
 function createProjectCard(project){
     const container = document.createElement('div');
     container.className = project.name;
+    container.classList.add ('user-project');
 
     // project button
     const projectButton = document.createElement('button');
@@ -148,9 +149,9 @@ function createProjectCard(project){
         console.log(currentPage);
     });
 
-    const projectRemoveButton = document.createElement('button');
-    // projectRemoveButton.classList.add('delete-project');
-    projectRemoveButton.textContent = 'delete';
+    const projectRemoveButton = document.createElement('i');
+    projectRemoveButton.className = 'bi bi-trash-fill';
+    projectRemoveButton.classList.add('delete-project');
     projectRemoveButton.addEventListener('click', () => {
         Storage.deleteProject(project.name);
         renderTaskList(Storage.tasks);
