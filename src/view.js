@@ -208,4 +208,6 @@ completeTasksButton.addEventListener('click', () => {
 });
 
 
+
+
 export {renderTaskList, createProjectCard, displayPage, setCurrentPage, renderProjectCard}
