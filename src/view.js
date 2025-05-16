@@ -16,80 +16,126 @@ function createTaskCard(task){
     
     const card = document.createElement('div');
     card.className = 'task-card';
-    card.innerHTML = `
-        <h1>${task.title}</h1>
-        <h3>${task.dueDate}</h3>
-    `;
+    
+
+    const dateDiv = document.createElement('div');
+    dateDiv.className = "due-check-div"
+
+    const dueDate = document.createElement('h3');
+    dueDate.textContent = `${task.dueDate}`;
+
+    const taskTitle = document.createElement('h1');
+    taskTitle.className = 'task-title'
+    taskTitle.textContent = `${task.title}`;
+
+    //render card background-color based on priority
+    if(task.priority === 'Low'){
+        card.style.backgroundColor = `rgb(108, 165, 245)`
+    } else if(task.priority === 'Medium'){
+        card.style.backgroundColor = `rgb(237, 171, 78)`
+    }else{
+        card.style.backgroundColor = `rgb(247, 108, 89)`
+    }
+
+    dateDiv.appendChild(dueDate);
+    card.appendChild(dateDiv);
+    card.appendChild(taskTitle);
+
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button-div')
 
     // Complete Button and Event
-    const completeBtn = document.createElement('button');
-    completeBtn.textContent = task.complete ? 'Undo' : 'Complete';
+    const completeBtn = document.createElement('input');
+    completeBtn.type = 'checkbox'
+    completeBtn.checked = task.complete;
+    // completeBtn.textContent = task.complete ? 'Undo' : 'Complete';
     completeBtn.addEventListener('click', () => {
+        // completeBtn.checked
         task.toggleComplete();
         Storage.saveTasks();
         Storage.saveProjects();
+        // card.style.backgroundColor  = `rgb(62, 194, 50)`
         // Put in how you want page to render (TODO)
         displayPage(currentPage);
     })
+    dateDiv.appendChild(completeBtn);
 
     // Delete Button and Event
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
+    const deleteBtn = document.createElement('i');
+    deleteBtn.className = 'bi bi-trash-fill'
     deleteBtn.addEventListener('click', () => {
         Storage.deleteTask(task.id);
         // Put in how you want page to render (TODO)
         displayPage(currentPage);
     })
 
+
+    const submitButton = document.querySelector('.submit-task');
+    const editSubmitButton = document.querySelector('.edit-task');
     //Edit Button and Event
-    const editBtn = document.createElement('button');
-    editBtn.textContent = 'Edit';
+    const editBtn = document.createElement('i');
+    editBtn.className = "bi bi-pencil-square";
     editBtn.addEventListener('click', () => {
-        setTaskFormData(task);
-        taskFormContainer.classList.remove('hide'); 
-        // taskForm.classList.remove('hide'); 
-        const submitButton = document.querySelector('.submit-task');
-        submitButton.classList.add('hide');
-        const editSubmitButton = document.querySelector('.edit-task');
-        editSubmitButton.classList.remove('hide')
-        editSubmitButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            const editData = getTaskFormData();
-            handleEditTask(task, editData);
-            taskFormContainer.classList.add('hide'); 
+        const closeFormBtn = document.querySelector('.close-taskForm-btn');
+        renderProjectCard(Storage.projects);
+        closeFormBtn.addEventListener('click', () => {
             submitButton.classList.remove('hide');
             editSubmitButton.classList.add('hide')
-            setCurrentPage(editData.project)
-             // Put in how you want page to render (TODO)
-            displayPage(currentPage);
-        }, {once: true});
+            editSubmitButton.removeEventListener('click',
+                handleEdit
+            )
+        })
+        setTaskFormData(task);
+        taskFormContainer.classList.remove('hide'); 
+        submitButton.classList.add('hide');
+        editSubmitButton.classList.remove('hide')
+        editSubmitButton.addEventListener('click', handleEdit
+        , {once: true});
     })
 
-    card.appendChild(completeBtn);
-    card.appendChild(deleteBtn);
-    card.appendChild(editBtn);
+    function handleEdit(e){
+        e.preventDefault();
+        const editData = getTaskFormData();
+        handleEditTask(task, editData);
+        taskFormContainer.classList.add('hide'); 
+        submitButton.classList.remove('hide');
+        editSubmitButton.classList.add('hide')
+        setCurrentPage(editData.project)
+         // Put in how you want page to render (TODO)
+        displayPage(currentPage);
+    }
+
+    // View Content
+    const viewButton = document.createElement('i');
+    viewButton.className = "bi bi-eye-fill";
+
+    // buttonDiv.appendChild(completeBtn);
+    buttonDiv.appendChild(viewButton)
+    buttonDiv.appendChild(deleteBtn);
+    buttonDiv.appendChild(editBtn);
+    card.appendChild(buttonDiv)
     return card;
 }
 
 function renderProjectCard(projects){
     const projectContainer = document.querySelector('.project-container');
+    const projectList = document.querySelector('#project')
+    projectList.innerHTML = '<option value="" disabled selected class="placeholder">--Select a project--</option>';
     projectContainer.innerHTML = '';
-    projects.forEach(project => projectContainer.appendChild(createProjectCard(project)));
+    projects.forEach(project => {
+        projectContainer.appendChild(createProjectCard(project))
+        // add to project list in task form
+        const projectOption = document.createElement('option');
+        projectOption.textContent = project.name;
+        projectOption.value = project.name;
+        projectList.appendChild(projectOption);
+    });
 }
 
 // TODO Project render
 function createProjectCard(project){
-    const projectList = document.querySelector('#project');
-
     const container = document.createElement('div');
     container.className = project.name;
-
-
-    // add to project list in task form
-    const projectOption = document.createElement('option');
-    projectOption.textContent = project.name;
-    projectOption.value = project.name;
-    projectList.appendChild(projectOption);
 
     // project button
     const projectButton = document.createElement('button');
@@ -109,11 +155,9 @@ function createProjectCard(project){
         Storage.deleteProject(project.name);
         renderTaskList(Storage.tasks);
         container.remove();
-        projectOption.remove();
     })
 
     // Edit project name
-
     container.appendChild(projectButton);
     container.appendChild(projectRemoveButton);
 

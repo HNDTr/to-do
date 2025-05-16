@@ -33,6 +33,9 @@ export function setTaskFormData(task){
 
     if (matchProject){
         matchProject.selected = true;
+    } else {
+        let placeholder = document.querySelector('option.placeholder');
+        placeholder.selected = true;
     }
 }
 

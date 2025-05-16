@@ -24,6 +24,7 @@ body{
     flex-direction: column;
     background-color: blanchedalmond;
     width: 80%;
+    padding: 10px;
     /* flex: 1 1 0; */
 }
 
@@ -31,6 +32,7 @@ body{
     background-color: rgba(0, 0, 0, 0.8);;
     position:absolute;
     display: flex;
+    z-index: 10;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -145,6 +147,75 @@ button[type="submit"]{
 
 button[type="submit"]:hover{
     transform: scale(1.05);
+}
+
+.task-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 0 1;
+    width: 24%;
+    height: 50%; 
+    padding: 10px;
+    border-radius: 10px;
+    background-color: burlywood;
+}
+
+.tasks-container{
+    display: flex;
+    padding: 15px;
+    flex-wrap: wrap;
+    overflow: scroll;
+    height: 100vh;
+    gap: 1%;
+}
+
+i:hover{
+    cursor: pointer;
+    color: green;
+}
+
+input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+
+.button-div{
+    display: flex;
+    justify-content: space-between;
+    font-size: 2rem;
+}
+
+.due-check-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type="checkbox"]{
+    z-index: 1;
+    transform: scale(2); /* Adjust scale as needed */
+    margin: 5px; /* Optional spacing */
+}
+
+.task-title{
+    color: rgb(255, 255, 255);
+}
+
+.add-task{
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 40px;
+}
+
+.add-task:hover{
+    cursor: pointer;
+    background-color: aquamarine;
+    transform: scale(1.01);
+}
+
+.task-card:hover{
+    cursor: pointer;
+    transform: scale(1.03);
 }
 
 .hide {
